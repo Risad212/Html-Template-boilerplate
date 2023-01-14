@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const AdmZip = require("adm-zip");
+const { rmdirSync } = require('fs');
 
 
 app.get("/", (req, res) => {
@@ -125,12 +126,30 @@ let uploadDir = fs.readdirSync(__dirname+`/${folderName}`)
 
    const data = zip.toBuffer();
 
-   zip.writeZip(__dirname+"/"+downloadName)
+   zip.writeZip(__dirname+"/"+downloadName);
 
    res.set('Content-Type', 'application/octet-stream');
    res.set('Content-Disposition', `attachment; filename=${downloadName}`);
    res.set('Content-Length',data.length);
    res.send(data);
+
+   if(downloadName){
+    fs.unlinkSync(downloadName);
+   }else{
+     console.log('error');
+   }
+   
+   // delate folder
+   if(folderName){
+    fs.rmdir(folderName, { recursive: true }, err => {
+      if (err) {
+         console.log(err);
+      }
+      console.log(`${folderName} is deleted!`)
+    })
+   }else{
+     console.log('error');
+   }
  }
  
  app.listen(PORT, () => {
