@@ -4,10 +4,15 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 const bodyParser = require("body-parser");
+const { rmdirSync } = require('fs');
+const AdmZip = require("adm-zip");
+const cors = require('cors')
 
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const AdmZip = require("adm-zip");
+const { rmdirSync } = require('fs');
 
 
 app.get("/", (req, res) => {
@@ -17,14 +22,15 @@ app.get("/", (req, res) => {
 
 
  app.post("/", (req, res) => {
-   runProject(res,req.body.pName)
+   let projectName = req.body.value;
+   runProject(res,projectName)
  });
 
 
- function runProject(res,Data){
-    // get folder name from user
-let folderName = Data
 
+function runProject(res,projectName){
+// get folder name from user
+let folderName = projectName
 // join the folder name with path
 const dirParth = path.join(__dirname, `${folderName}`)
 
@@ -36,6 +42,7 @@ fs.mkdir(`${folderName}`, (err) =>{
         console.log(err);
     }
 })
+
 
 /* =======================
     html file creation 
@@ -140,7 +147,7 @@ let uploadDir = fs.readdirSync(__dirname+`/${folderName}`)
    
    // delate folder
    if(folderName){
-    fs.rmdir(folderName, { recursive: true }, err => {
+    fs.rmdirSync(folderName, { recursive: true }, err => {
       if (err) {
          console.log(err);
       }
@@ -149,8 +156,16 @@ let uploadDir = fs.readdirSync(__dirname+`/${folderName}`)
    }else{
      console.log('error');
    }
+   return res.send('Project Downloaded Sucessfull')
  }
  
+// extarnal css file Added
+app.get('/home.css', (req,res) =>{
+  res.sendFile(path.join(__dirname, 'home.css'))
+})
+
+
+//=====================================================
  app.listen(PORT, () => {
    console.log(`Server is running at ${PORT}`);
  });
