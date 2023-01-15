@@ -22,14 +22,15 @@ app.get("/", (req, res) => {
 
 
  app.post("/", (req, res) => {
-   let getData = req.body.value;
-   runProject(res,getData)
+   let projectName = req.body.value;
+   runProject(res,projectName)
  });
 
 
- function runProject(res,Data){
-    // get folder name from user
-let folderName = Data
+
+function runProject(res,projectName){
+// get folder name from user
+let folderName = projectName
 // join the folder name with path
 const dirParth = path.join(__dirname, `${folderName}`)
 
