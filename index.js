@@ -8,7 +8,6 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const AdmZip = require("adm-zip");
-const { rmdirSync } = require('fs');
 
 
 app.get("/", (req, res) => {

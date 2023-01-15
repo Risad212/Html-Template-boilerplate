@@ -67,10 +67,18 @@
             <h2>Create Boilerplate For Your Project</h2>
             <form action="/" method="POST">
                 <input type="text" placeholder="Write Your Project Name" name="pName" id="pName">
-                <button type="submit">create</button>
+                <button type="submit" id ="btn">create</button>
             </form>
         </div>
     </div>
 
+<script>
+   const btn = document.getElementById('btn')
+   btn.addEventListener('click', function(){
+       setTimeout(() => {
+        document.getElementById('pName').value = ''
+       },10);
+   })
+</script>
 </body>
 </html>
