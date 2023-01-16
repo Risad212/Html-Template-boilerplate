@@ -11,13 +11,13 @@ app.use(bodyParser.json());
 
 
 
-app.get(" https://html-template-boilerplate.vercel.app/", (req, res) => {
+app.get("/", (req, res) => {
    res.sendFile(__dirname + "/home.html");
  });
  
 
 
- app.post(" https://html-template-boilerplate.vercel.app/", (req, res) => {
+ app.post("/", (req, res) => {
    let projectName = req.body.pName;
    runProject(res,projectName)
  });
