@@ -154,7 +154,6 @@ let uploadDir = fs.readdirSync(__dirname+`/${folderName}`)
    }else{
      console.log('error');
    }
-   return res.send('Project Downloaded Sucessfull')
  }
  
 // extarnal css file Added
