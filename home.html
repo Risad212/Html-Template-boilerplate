@@ -1,33 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <title>Html Tempalte Boilerplate</title>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="#">
-    <link rel="stylesheet" href="home.css">
-</head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" href="home.css" />
+  </head>
 
-<body>
-
+  <body>
     <div class="container">
-        <div class="card">
-            <h2>Create Html Template Boilerplate For Your Project</h2>
-            <form action="/" method="POST">
-                <input type="text" placeholder="Write Your Project Name" name="pName" id="pName">
-                <button type="submit" onclick="clearData()">create</button>
-            </form>
-        </div>
+      <div class="card">
+        <h2>Create Html Template Boilerplate For Your Project</h2>
+        <form action="/" method="POST">
+          <input
+            type="text"
+            placeholder="Write Your Project Name"
+            name="pName"
+            id="pName"
+          />
+          <button type="submit">create</button>
+        </form>
+      </div>
     </div>
 
-<!-- <script>
-  function clearData(){
-     setTimeout(() => {
-       document.getElementById('pName').value = '' 
-     }, 3000);
-  }
-</script> -->
-</body>
+    <a href="" id="anchor" download=""></a>
+    <script>
+      const anchor = document.getElementById('anchor')
+      const form = document.querySelector('form')
+      const input = document.getElementById('pName')
+
+      form.onsubmit = async (e) => {
+        e.preventDefault()
+        const res = await fetch('/', {
+          method: 'POST',
+          body: input.value,
+        })
+        const data = await res.blob()
+
+        const url = URL.createObjectURL(data)
+        anchor.href = url
+        anchor.download = input.value + `.zip`
+        anchor.click()
+        input.value = ''
+      }
+    </script>
+  </body>
 </html>
